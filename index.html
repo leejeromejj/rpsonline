@@ -127,7 +127,6 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .nd.lk{opacity:.5}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 #e9b44c66}50%{box-shadow:0 0 0 12px #e9b44c00}}
 .un{position:absolute;display:flex;gap:3px;z-index:1;transform:translateY(-50%)}.un.r{margin-left:44px}.un.l{transform:translate(-100%,-50%);margin-left:-44px}.un .card{--h:40px;box-shadow:none}
-.card.h{background:linear-gradient(160deg,#4a3b78,#271f45);color:#eadfff;box-shadow:0 0 0 1px #6a58a6 inset,0 6px 14px #0006}.chip.h{background:#3a2f5b;color:#e8dcff}
 .coin{display:inline-block;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#e9b44c 60%,#a9791a);vertical-align:-1px;margin-right:5px}
 .rw{font-weight:900;font-size:18px;color:var(--acc)}
 .gc{flex:1;display:flex;gap:18px;min-height:0;padding-top:6px}.gl{flex:1.3;display:flex;align-items:center;justify-content:center;min-width:0}
@@ -148,6 +147,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .cw.blocked .card{animation:blk .5s}
 @keyframes blk{0%{box-shadow:0 0 0 0 #6ad6ff}50%{box-shadow:0 0 0 6px #6ad6ff,0 0 40px #6ad6ff}100%{box-shadow:0 0 0 0 #6ad6ff00}}
 @media (hover:hover){.btn:hover{background:var(--s2);border-color:#3b4255}.pri:not(:disabled):hover{background:#f3c46a}.mi{transition:transform .15s,filter .15s}.mi:hover{filter:brightness(1.12);transform:translateY(-2px)}.hc:hover:not(.sel){transform:translateY(-6px)}.cell,.nd{transition:transform .15s}.cell:hover,.nd:not(.lk):hover{transform:translateY(-3px)}.tile:hover{background:var(--s2)}}
+.burst.x,.flash.x{color:#ff8a3c}.burst.x{border-width:7px;animation:burstx .8s ease-out forwards}
+@keyframes burstx{from{transform:scale(.3);opacity:1}to{transform:scale(11);opacity:0}}
+.ar.boom{animation:boom .6s}
+@keyframes boom{0%,100%{transform:none}10%{transform:translate(-14px,7px) scale(1.02)}25%{transform:translate(12px,-8px)}40%{transform:translate(-10px,5px)}55%{transform:translate(8px,-4px)}75%{transform:translate(-4px,2px)}}
 input{user-select:text;-webkit-user-select:text}
 .menu{display:grid;grid-template-columns:1fr 1fr;gap:9px}.menu .main{grid-column:1/3}.mi{height:max(54px,calc(13*var(--dv)));flex-direction:column;align-items:flex-start;justify-content:center;gap:2px}
 .ol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}.ol.two{flex-direction:row;gap:18px;padding:0 calc(4*var(--dw))}
@@ -167,21 +170,24 @@ input{user-select:text;-webkit-user-select:text}
 <div id="app"></div>
 <div id="rot"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><rect x="14" y="4" width="20" height="40" rx="4"/></svg>기기를 가로로 돌려주세요</div>
 <script>
-const NM={S:'가위',R:'바위',P:'보'},ORDER=['S','R','P','MAGE','-1','1','2','3','PI','4','5','999999','INF'];
+const NM={S:'가위',R:'바위',P:'보'},ORDER=['S','SS','R','P','BOMB','MAGE','-1','1','2','3','PI','4','5','999999','INF'];
 /* 손 아이콘: Font Awesome Free 7 (Regular) · CC BY 4.0 */
 const SV={R:'<path d="M224 464c-17.7 0-32 14.3-32 32v48c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32v-48c0-17.7-14.3-32-32-32zm-22.8-48h64.6l-79.5-88.3c-6.6-7.4-10.3-16.9-10.3-26.8V268c0-16.1 11.9-29.5 27.4-31.7c11.8-1.7 20.6-11.8 20.6-23.8V136c0-13.3 10.7-24 24-24c7.2 0 13.6 3.1 18 8.1c4.6 5.2 11.1 8.1 18 8.1s13.4-3 18-8.1c4.4-5 10.8-8.1 18-8.1c8.5 0 15.900 4.400 20.200 11.100c6.900 10.700 20.900 14.200 32 8c3.500-1.900 7.400-3.100 11.800-3.100c10.600 0 19.700 6.900 22.800 16.600c3.800 11.700 15.900 18.700 28 16c1.700-.4 3.400-.6 5.200-.6c13.300 0 24 10.700 24 24v92.200c0 14.400-3.500 28.500-10.200 41.200L401.600 416h54.300l40.300-76.200c10.400-19.600 15.800-41.500 15.800-63.600V184c0-38.400-30.100-69.800-68.100-71.900C431 92.800 409 80 384 80c-5.700 0-11.200.7-16.500 1.900C354.800 70.800 338.200 64 320 64c-13.100 0-25.400 3.500-36 9.600c-10.600-6.100-22.900-9.600-36-9.600c-39.800 0-72 32.200-72 72v58.700c-28.300 12.300-48 40.500-48 73.300v32.900c0 21.700 8 42.700 22.600 58.900z"/>',S:'<path transform="rotate(90 320 320)" d="M64.2 340.3c-1.2-35.300 26.400-65 61.700-66.200l3.300-.1l-8.200-1.800c-34.500-7.700-56.300-41.900-48.700-76.400s41.900-56.300 76.400-48.600l173 38.300c2.300-2.900 4.600-5.700 7.100-8.500l18.400-20.300c16.700-18.200 40.300-28.700 65.100-28.700h10.200c54.100 0 104.100 28.700 131.300 75.400l1.500 2.600c13.600 23.200 20.700 49.700 20.700 76.600V408c0 66.300-53.700 120-120 120H352c-35.300 0-64-28.700-64-64c0-2.800.2-5.600.5-8.300c-19.400-11-32.500-31.800-32.500-55.700v-2.400L130.400 402c-35.300 1.200-65-26.400-66.200-61.700m63.400-18.200c-8.800.3-15.700 7.700-15.400 16.600s7.700 15.700 16.500 15.400l161.500-5.600c9.800-.3 18.700 5.300 22.700 14.200s2.200 19.300-4.500 26.400c-2.800 2.900-4.400 6.700-4.400 11c0 8.800 7.200 16 16 16c9.100 0 17.400 5.100 21.500 13.300s3.200 17.900-2.300 25.100c-2 2.700-3.200 6-3.200 9.600c0 8.800 7.200 16 16 16h104c39.800 0 72-32.200 72-72V282.700c0-18.400-4.900-36.500-14.200-52.400l-1.500-2.600c-18.600-32-52.800-51.600-89.800-51.600h-10.200c-11.300 0-22 4.800-29.600 13.100l-18.400 20.300c-.6.600-1.100 1.300-1.700 1.900l57 13.200c8.600 2 14 10.600 12 19.200s-10.600 14-19.200 12l-85.600-20L138.300 194c-8.600-1.900-17.200 3.500-19.100 12.200s3.500 17.200 12.200 19.100l187.500 41.600c10.200 2.300 17.800 10.900 18.700 21.400l.1 1c.6 6.600-1.500 13.100-5.800 18.100s-10.600 7.900-17.200 8.200z"/>',P:'<path d="M320.5 64c-25.300 0-47.200 14.700-57.600 36c-7-2.600-14.500-4-22.400-4c-35.300 0-64 28.700-64 64v165.500l-2.700-2.700c-25-25-65.500-25-90.500 0s-25 65.500 0 90.500L171 501c48 48 113.100 75 181 75h16.500c1.500 0 3-.1 4.500-.4c91.700-6.200 165-79.400 171.100-171.100c.3-1.500.4-3 .4-4.500V224c0-35.300-28.700-64-64-64c-5.500 0-10.900.7-16 2v-2c0-35.300-28.700-64-64-64c-7.900 0-15.400 1.400-22.400 4c-10.400-21.300-32.300-36-57.600-36m-16 96.100V128c0-8.800 7.200-16 16-16s16 7.200 16 16v168c0 13.300 10.700 24 24 24s24-10.700 24-24V160c0-8.800 7.200-16 16-16s16 7.200 16 16v136c0 13.300 10.700 24 24 24s24-10.700 24-24v-72c0-8.800 7.200-16 16-16s16 7.200 16 16v172.900c-.1.600-.1 1.300-.2 1.900c-3.400 69.700-59.300 125.600-129 129c-.6 0-1.300.1-1.900.2H352c-55.100 0-108-21.900-147-60.900l-87.800-87.800c-6.200-6.200-6.200-16.400 0-22.600s16.400-6.200 22.600 0l43.700 43.700c6.900 6.900 17.200 8.900 26.200 5.200s14.800-12.500 14.800-22.200V160c0-8.800 7.200-16 16-16s16 7.100 16 15.900V296c0 13.300 10.700 24 24 24s24-10.700 24-24z"/>'};
 /* 카드는 타입(종족 공통 규칙)과 특성(고유 능력)을 가진다 */
+SV.SS='<g transform="translate(320 350) scale(.76) translate(-320 -320)">'+SV.S+'</g><path transform="translate(92 96) scale(58)" d="M0-1L.22-.22 1 0 .22.22 0 1-.22.22-1 0-.22-.22z"/><path transform="translate(556 84) scale(46)" d="M0-1L.22-.22 1 0 .22.22 0 1-.22.22-1 0-.22-.22z"/><path transform="translate(588 330) scale(34)" d="M0-1L.22-.22 1 0 .22.22 0 1-.22.22-1 0-.22-.22z"/><path transform="translate(60 320) scale(30)" d="M0-1L.22-.22 1 0 .22.22 0 1-.22.22-1 0-.22-.22z"/>';
+SV.BOMB='<path transform="translate(8 6) scale(26.2)" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>';
 SV.MAGE='<path d="M60 470c0-48 118-88 260-88s260 40 260 88-118 90-260 90S60 518 60 470z"/><path d="M340 40C318 150 280 270 190 410h250C410 280 380 160 340 40z"/><path fill="#b58cff" d="M205 372h232l-14 44H219z"/>';
 const TYPES={num:{n:'수',d:'큰 수가 이깁니다.'},rps:{n:'가위바위보',d:'가위바위보 규칙을 따릅니다.'},neg:{n:'음의정수',d:'자연수에게 승리합니다.'},hum:{n:'인간',d:'인간 종족입니다.'},mage:{n:'마법사',d:'물리 공격에 취약합니다. (가위·바위·보에게 패배)'}};
-const TRAITS={use:{n:'수로 쓰기',d:X=>`수 타입 카드와 만나면 수로 쓰입니다. (값 ${X.v})`},excess:{n:'과유불급',d:()=>'자신의 5배 이상인 수를 이깁니다.'},zero:{n:'무한의 허무',d:()=>'0에게 패배합니다.'},beam:{n:'mod 100 빔',d:()=>'상대의 수를 mod 100으로 줄여 0~99로 만듭니다. 무한대나 음수만 아니면 승리합니다.'}};
+const TRAITS={use:{n:'수로 쓰기',d:X=>`수 타입 카드와 만나면 수로 쓰입니다. (값 ${X.v})`},excess:{n:'과유불급',d:()=>'자신의 5배 이상인 수를 이깁니다.'},zero:{n:'무한의 허무',d:()=>'0에게 패배합니다.'},shine:{n:'반짝이는 날',d:()=>'가위와 만나면 비기지 않고 이깁니다.'},bomb:{n:'폭발',d:()=>'가위바위보 타입 카드에게는 무조건 이깁니다. 그 외의 상대에게는 15% 확률로 터져 승리하며, 터지지 않으면 패배합니다.'},beam:{n:'mod 100 빔',d:()=>'상대의 수를 mod 100으로 줄여 0~99로 만듭니다. 무한대나 음수만 아니면 승리합니다.'}};
 const DEF={S:{t:'rps',v:2,tr:['use']},R:{t:'rps',v:0,tr:['use']},P:{t:'rps',v:5,tr:['use']},'-1':{t:'neg',v:-1,tr:[]},'1':{t:'num',v:1,tr:['excess']}};
-[2,3,4,5].forEach(n=>DEF[n]={t:'num',v:n,tr:[]});DEF.PI={t:'num',v:3.14,tr:[]};DEF['999999']={t:'num',v:999999,tr:[]};DEF.INF={t:'num',v:Infinity,tr:['zero']};DEF.MAGE={t:'hum',ts:['hum','mage'],v:null,tr:['beam']};
+[2,3,4,5].forEach(n=>DEF[n]={t:'num',v:n,tr:[]});DEF.PI={t:'num',v:3.14,tr:[]};DEF['999999']={t:'num',v:999999,tr:[]};DEF.INF={t:'num',v:Infinity,tr:['zero']};DEF.SS={t:'rps',v:2,tr:['use','shine']};DEF.BOMB={t:'rps',v:null,tr:['bomb']};DEF.MAGE={t:'hum',ts:['hum','mage'],v:null,tr:['beam']};
 const isR=c=>DEF[c].t=='rps',val=c=>DEF[c].v,BEATS={S:'P',R:'S',P:'R'};
 const ic=c=>`<svg viewBox="0 0 640 640">${SV[c]}</svg>`;
-function cmp(a,b){
+function cmp(a,b,rnd){
  const X=DEF[a],Y=DEF[b];
  if(X.t=='hum'||Y.t=='hum'){if(X.t==Y.t)return 0;const g=X.t=='hum'?1:-1,o=X.t=='hum'?Y:X;return o.t=='rps'?-g:(isFinite(o.v)&&o.v>=0?g:-g)}
- if(X.t=='rps'&&Y.t=='rps')return a==b?0:(BEATS[a]==b?1:-1);
+ if(X.t=='rps'&&Y.t=='rps'){if(a==b)return 0;if(a=='BOMB')return 1;if(b=='BOMB')return -1;if(a=='SS'&&b=='S')return 1;if(a=='S'&&b=='SS')return -1;const x=a=='SS'?'S':a,y=b=='SS'?'S':b;return BEATS[x]==y?1:BEATS[y]==x?-1:0}
+ if(a=='BOMB')return rnd<.15?1:-1;if(b=='BOMB')return rnd<.15?-1:1;
  const ty=q=>q.t=='rps'&&q.tr.includes('use')?'num':q.t,tx=ty(X),tz=ty(Y),nat=(t,v)=>t=='num'&&Number.isInteger(v)&&v>=1;
  if(X.tr.includes('zero')&&Y.v==0)return -1;
  if(Y.tr.includes('zero')&&X.v==0)return 1;
@@ -191,19 +197,20 @@ function cmp(a,b){
  if(X.tr.includes('excess')&&Y.v>=5*X.v&&Y.v!==Infinity)return 1;
  if(Y.tr.includes('excess')&&X.v>=5*Y.v&&X.v!==Infinity)return -1;
  return X.v==Y.v?0:X.v>Y.v?1:-1}
-const STAGES=[{d:['S','R','P','S','R'],p:0},{d:['R','R','P','S','P'],p:.2},{d:['S','S','R','P','P'],p:.4},{d:['1','2','3','4','R'],p:.35},{d:['2','4','5','S','P'],p:.5},{d:['-1','3','5','R','P'],p:.55},{d:['-1','1','MAGE','5','S'],p:.65},{d:['PI','-1','4','5','R'],p:.72},{d:['PI','MAGE','5','-1','P'],p:.82},{d:['999999','INF','PI','-1','R'],p:.92}];
-const UNLOCK={4:['1','2','3','4','5'],6:['-1'],7:['MAGE'],8:['PI'],10:['999999','INF']};
-const DROP={S:.12,R:.12,P:.10,'2':.10,'3':.09,'4':.08,'5':.07,'1':.05,'-1':.04,PI:.035,MAGE:.03,'999999':.015,INF:.01};
-const GW={S:20,R:20,P:16,'2':14,'3':14,'4':10,'5':8,'1':6,'-1':5,PI:4,MAGE:2,'999999':1.5,INF:1};
+const STAGES=[{d:['S','R','P','S','R'],p:0},{d:['R','R','P','S','P'],p:.2},{d:['SS','S','R','P','P'],p:.3},{d:['SS','SS','R','P','S'],p:.4},{d:['BOMB','SS','R','P','P'],p:.5},{d:['1','2','3','4','R'],p:.45},{d:['2','4','5','S','BOMB'],p:.5},{d:['-1','3','5','R','P'],p:.55},{d:['-1','1','4','5','SS'],p:.65},{d:['PI','-1','4','5','R'],p:.72},{d:['PI','1','5','-1','BOMB'],p:.82},{d:['999999','INF','PI','-1','R'],p:.88},{d:['999999','INF','BOMB','1','PI'],p:.93},{d:['MAGE','999999','INF','-1','BOMB'],p:.97}];
+const UNLOCK={3:['SS'],5:['BOMB'],6:['1','2','3','4','5'],8:['-1'],10:['PI'],12:['999999','INF'],14:['MAGE']};
+const DROP={S:.12,SS:.07,R:.12,P:.10,BOMB:.04,'2':.10,'3':.09,'4':.08,'5':.07,'1':.05,'-1':.04,PI:.035,MAGE:.03,'999999':.015,INF:.01};
+const GW={S:20,SS:8,R:20,P:16,BOMB:3,'2':14,'3':14,'4':10,'5':8,'1':6,'-1':5,PI:4,MAGE:2,'999999':1.5,INF:1};
 let G={col:{S:2,R:2,P:1},deck:['S','S','R','R','P'],clr:[],coin:200},scr='home',B=null,tm=[];
 try{const s=JSON.parse(localStorage.getItem('fd3'));if(s&&s.col)G=s}catch(e){}
 if(G.coin==null)G.coin=200;
+if(G.v!=2){G.clr=G.clr.length?[0,1,...G.clr.map(i=>i+2)]:[];G.v=2}
 const save=()=>{try{localStorage.setItem('fd3',JSON.stringify(G))}catch(e){}};
 const $=document.getElementById('app');
 const DISP={PI:'π',INF:'∞'};
-function card(c,x=''){const t=DEF[c].t;return `<div class="card ${t=='rps'?'r':t=='hum'?'h':''} ${x}">${SV[c]?ic(c):`<b${c=='999999'?' style="font-size:27cqw"':''}>${DISP[c]||c}</b>`}</div>`}
+function card(c,x=''){const t=DEF[c].t;return `<div class="card ${t=='rps'?'r':''} ${x}">${SV[c]?ic(c):`<b${c=='999999'?' style="font-size:27cqw"':''}>${DISP[c]||c}</b>`}</div>`}
 const back=(x='')=>`<div class="card back ${x}"><i></i></div>`;
-const chip=c=>`<div class="chip ${DEF[c].t=='rps'?'r':DEF[c].t=='hum'?'h':''}"${c=='999999'?' style="font-size:8px"':''}>${SV[c]?ic(c):DISP[c]||c}</div>`;
+const chip=c=>`<div class="chip ${DEF[c].t=='rps'?'r':''}"${c=='999999'?' style="font-size:8px"':''}>${SV[c]?ic(c):DISP[c]||c}</div>`;
 function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;$.appendChild(e);setTimeout(()=>e.remove(),1700)}
 function go(s){scr=s;render()}
 function render(){({home,stages,deck,rules,battle,gacha,online})[scr]()}
@@ -239,8 +246,8 @@ function deck(){
  const cnt={};G.deck.forEach(c=>cnt[c]=(cnt[c]||0)+1);
  $.innerHTML=`<div class="hd"><button class="btn" onclick="go('home')">‹ 뒤로</button><div class="t">덱 편집<small>${G.deck.length} / 5</small></div><button class="btn pri" onclick="G.deck.length==5?(save(),go('stages')):toast('카드 5장을 골라주세요')">완료</button></div>
  <div class="dk"><div class="lbl">내 덱 · 탭하면 카드 정보</div><div class="row dkr">${[0,1,2,3,4].map(i=>G.deck[i]?`<button onclick="info('${G.deck[i]}',${i})">${card(G.deck[i])}</button>`:'<div class="slot"></div>').join('')}</div>
- <div class="lbl" style="margin-top:18px">전체 카드 · 탭하면 정보와 사용 예시</div><div class="cells">${ORDER.map(c=>{const o=G.col[c]||0,l=o-(cnt[c]||0);return o?`<button class="cell ${l?'':'off'}" onclick="info('${c}',-1)">${card(c)}<span class="c">×${l}</span></button>`:`<button class="cell" onclick="info('${c}',-1)">${card(c,'sil')}</button>`}).join('')}</div></div>${D?detail():''}`}
-const CARDS={R:{n:'바위',d:'꽉 쥔 주먹. 가위를 부수지만 보에게 감싸이고, 숫자 앞에서는 약하지만 -1은 이깁니다.',t:'숫자와 대결 시 0으로 취급'},S:{n:'가위',d:'날카로운 두 손가락. 보를 가르고 1도 이기지만 바위에게 막힙니다.',t:'숫자와 대결 시 2로 취급'},P:{n:'보',d:'활짝 편 손. 바위를 감싸고 큰 숫자 대부분을 누르지만 가위와 1, -1을 조심하세요.',t:'숫자와 대결 시 5로 취급 · 1, -1에게 패배'},'999999':{n:'999999',d:'여섯 개의 9. 거의 모든 카드를 압도하지만 1의 과유불급과 음의정수 -1, 무한대 앞에서는 힘을 쓰지 못합니다.',t:''},'INF':{n:'무한대 (∞)',d:'끝없이 큰 수. 0(바위)에게만 패배하는 최강의 수입니다.',t:''},'MAGE':{n:'마법사',d:'모자 속에 감춘 마력. 빔으로 상대의 수를 mod 100으로 깎아 내려 무한대와 음수만 빼면 모두 이기지만, 주먹·가위·보 같은 물리 공격에는 속수무책입니다.',t:''},'PI':{n:'파이 (π)',d:'원주율 3.14. 정수가 아니라서 자연수를 이기는 음의정수(-1)도 이기지 못합니다. 3과 4 사이의 애매한 강자.',t:''},'-1':{n:'-1',d:'음수의 비수. 어떤 자연수 카드도 꺾고 가위·보까지 이기지만, 0인 바위에게만 무릎을 꿇습니다.',t:'특성: 바위(0)를 뺀 모든 카드를 이김'},'1':{n:'1',d:'가장 작은 수지만 가장 날카로운 비수. 자신의 5배 이상인 수를 쓰러뜨립니다.',t:'특성: 5(보 포함)를 이기는 유일한 카드'},'2':{n:'2',d:'가볍게 던지는 한 수. 낮은 수들 사이에서 제 몫을 합니다.',t:'순수 숫자 카드'},'3':{n:'3',d:'균형 잡힌 중간 카드. 어떤 상황에도 무난하게 쓰입니다.',t:'순수 숫자 카드'},'4':{n:'4',d:'5와 보, -1만 피하면 거의 모든 카드를 누르는 묵직한 수.',t:'순수 숫자 카드'},'5':{n:'5',d:'가장 큰 수. 대부분을 누르지만 1과 -1에게는 무릎을 꿇습니다.',t:'특성: 1, -1에게 패배'}};
+ <div class="lbl" style="margin-top:18px">전체 카드 · 탭하면 정보와 사용 예시</div><div class="cells">${ORDER.filter(c=>G.col[c]||pool().includes(c)).map(c=>{const o=G.col[c]||0,l=o-(cnt[c]||0);return o?`<button class="cell ${l?'':'off'}" onclick="info('${c}',-1)">${card(c)}<span class="c">×${l}</span></button>`:`<button class="cell" onclick="info('${c}',-1)">${card(c,'sil')}</button>`}).join('')}</div></div>${D?detail():''}`}
+const CARDS={R:{n:'바위',d:'꽉 쥔 주먹. 가위를 부수지만 보에게 감싸이고, 숫자 앞에서는 약하지만 -1은 이깁니다.',t:'숫자와 대결 시 0으로 취급'},S:{n:'가위',d:'날카로운 두 손가락. 보를 가르고 1도 이기지만 바위에게 막힙니다.',t:'숫자와 대결 시 2로 취급'},P:{n:'보',d:'활짝 편 손. 바위를 감싸고 큰 숫자 대부분을 누르지만 가위와 1, -1을 조심하세요.',t:'숫자와 대결 시 5로 취급 · 1, -1에게 패배'},'999999':{n:'999999',d:'여섯 개의 9. 거의 모든 카드를 압도하지만 1의 과유불급과 음의정수 -1, 무한대 앞에서는 힘을 쓰지 못합니다.',t:''},'INF':{n:'무한대 (∞)',d:'끝없이 큰 수. 0(바위)에게만 패배하는 최강의 수입니다.',t:''},'SS':{n:'강화된 가위',d:'반짝이는 날이 선 가위. 일반 가위와 맞붙으면 비기지 않고 이깁니다.',t:''},'BOMB':{n:'폭탄',d:'엄지를 치켜세운 신호와 함께 던지는 폭탄. 가위바위보 앞에서는 반드시 터지지만, 다른 상대에게는 15%만 터집니다.',t:''},'MAGE':{n:'마법사',d:'모자 속에 감춘 마력. 빔으로 상대의 수를 mod 100으로 깎아 내려 무한대와 음수만 빼면 모두 이기지만, 주먹·가위·보 같은 물리 공격에는 속수무책입니다.',t:''},'PI':{n:'파이 (π)',d:'원주율 3.14. 정수가 아니라서 자연수를 이기는 음의정수(-1)도 이기지 못합니다. 3과 4 사이의 애매한 강자.',t:''},'-1':{n:'-1',d:'음수의 비수. 어떤 자연수 카드도 꺾고 가위·보까지 이기지만, 0인 바위에게만 무릎을 꿇습니다.',t:'특성: 바위(0)를 뺀 모든 카드를 이김'},'1':{n:'1',d:'가장 작은 수지만 가장 날카로운 비수. 자신의 5배 이상인 수를 쓰러뜨립니다.',t:'특성: 5(보 포함)를 이기는 유일한 카드'},'2':{n:'2',d:'가볍게 던지는 한 수. 낮은 수들 사이에서 제 몫을 합니다.',t:'순수 숫자 카드'},'3':{n:'3',d:'균형 잡힌 중간 카드. 어떤 상황에도 무난하게 쓰입니다.',t:'순수 숫자 카드'},'4':{n:'4',d:'5와 보, -1만 피하면 거의 모든 카드를 누르는 묵직한 수.',t:'순수 숫자 카드'},'5':{n:'5',d:'가장 큰 수. 대부분을 누르지만 1과 -1에게는 무릎을 꿇습니다.',t:'특성: 1, -1에게 패배'}};
 const START=['S','R','P'];
 let D=null;
 function info(c,i){D={c,i};deck()}
@@ -251,7 +258,8 @@ function srcHtml(c){const s=STAGES.map((x,i)=>x.d.includes(c)?i+1:0).filter(Bool
 function why(a,b){
  const X=DEF[a],Y=DEF[b],f=v=>v===Infinity?'∞':v;
  if(X.t=='hum'||Y.t=='hum'){if(X.t==Y.t)return '같은 카드';const o=X.t=='hum'?Y:X;return o.t=='rps'?'마법사는 물리 공격에 취약':(isFinite(o.v)&&o.v>=0?'mod 100 빔 · '+o.v+' mod 100 = '+(o.v%100):'빔이 통하지 않음 · '+f(o.v))}
- if(X.t=='rps'&&Y.t=='rps')return a==b?'같은 카드':'가위바위보 상성';
+ if(X.t=='rps'&&Y.t=='rps'){if(a==b)return '같은 카드';if(a=='BOMB'||b=='BOMB')return '폭탄 · 가위바위보 타입에게 무조건 승리';if((a=='SS'&&b=='S')||(a=='S'&&b=='SS'))return '반짝이는 날 · 가위를 이김';return '가위바위보 상성'}
+ if(a=='BOMB'||b=='BOMB')return '폭탄 · 15% 확률로 폭발 (불발 시 패배)';
  const T=q=>q.t=='rps'&&q.tr.includes('use')?'num':q.t,tx=T(X),tz=T(Y),nat=(t,v)=>t=='num'&&Number.isInteger(v)&&v>=1;
  if((X.tr.includes('zero')&&Y.v==0)||(Y.tr.includes('zero')&&X.v==0))return '무한의 허무 · 0에게 패배';
  if(tx=='neg'&&tz=='neg')return '같은 카드';
@@ -259,7 +267,7 @@ function why(a,b){
  if((X.tr.includes('excess')&&Y.v>=5*X.v&&Y.v!==Infinity)||(Y.tr.includes('excess')&&X.v>=5*Y.v&&X.v!==Infinity))return '과유불급 · 5배 이상의 수를 이김';
  return (X.t=='rps'||Y.t=='rps'?'수로 쓰기 · ':'')+f(X.v)+(X.v==Y.v?' = ':X.v>Y.v?' > ':' < ')+f(Y.v)}
 function exHtml(c){
- const L=ORDER.map(o=>({o,r:cmp(c,o),w:why(c,o)})),sp=x=>/음의|과유|상성|허무|빔|물리/.test(x.w)?1:0;
+ const L=ORDER.map(o=>({o,r:cmp(c,o),w:why(c,o)})),sp=x=>/음의|과유|상성|허무|빔|물리|폭탄|반짝/.test(x.w)?1:0;
  const W=L.filter(x=>x.r>0).sort((a,b)=>sp(b)-sp(a)),Ls=L.filter(x=>x.r<0).sort((a,b)=>sp(b)-sp(a)),Dr=L.filter(x=>x.r==0);
  return [W[0],Ls[0],W[1],Dr[0]||Ls[1]].filter(Boolean).map(x=>`<div class="ex ${x.r>0?'w':x.r<0?'l':'d'}"><div class="vs">${card(c)}<em>VS</em>${card(x.o)}</div><div class="rs"><b>${x.r>0?'승리':x.r<0?'패배':'무승부'}</b><span>${x.w}</span></div></div>`).join('')}
 function traitHtml(c){const X=DEF[c];return (X.ts||[X.t]).map(k=>`<div class="tg"><i>타입</i><b>${TYPES[k].n}</b><span>${TYPES[k].d}</span></div>`).join('')+(X.tr.length?X.tr.map(k=>`<div class="tg"><i class="t2">특성</i><b>${TRAITS[k].n}</b><span>${TRAITS[k].d(X)}</span></div>`).join(''):`<div class="tg"><i class="t2">특성</i><span>없음</span></div>`)}
@@ -298,12 +306,12 @@ function battle(){
  const tg=k=>b.mg&&(k>0?b.pc:b.ec)!='MAGE'?'tgt':'';
  const ex=b.ec?`<div class="cw ${cl(-1)} ${tg(-1)}" style="--s:1;--y:-1">${rv||(ph=='slam'&&b.mg)?card(b.ec,(rv&&b.mg)?'':'flip'):back()}</div>`:'<div class="slot"></div>';
  const px=b.pc?`<div class="cw ${cl(1)} ${tg(1)}" style="--s:-1;--y:1">${card(b.pc)}</div>`:'<div class="slot"></div>';
- const bc=res>0?'g':res<0?'r':'n',wt=t=>`<div class="wt">${t}</div>`;
+ const bc=b.bx?'x':res>0?'g':res<0?'r':'n',wt=t=>`<div class="wt">${t}</div>`;
  const ban=rv?(res>0?['승리','w',b.cw>1?wt('+'+b.cw+'점'):'']:res<0?['패배','l',b.cw>1?wt('상대 +'+b.cw+'점'):'']:['무승부','d',wt('다음 판 ×'+b.w)]):['','',b.w>1?wt('이번 판 ×'+b.w):''];
  $.innerHTML=`<div class="hd"><button class="btn" onclick="quit()">‹ 포기</button><div class="t">${b.pvp?'친선 대전':'STAGE '+(b.i+1)}</div><span style="width:70px"></span></div>
- <div class="ar ${rv&&res?'shake':''} ${b.mg?'mg':''}">
+ <div class="ar ${rv&&res?(b.bx?'boom':'shake'):''} ${b.mg?'mg':''}">
  <div class="pn"><b>상대</b><div class="pips">${pips(b.es)}</div><div class="mini">${b.eh.map((c,i)=>b.eu[i]?card(c,'used'):back()).join('')}</div></div>
- ${ex}<div class="mid"><div class="r">ROUND ${b.r} / 5</div><div class="bn ${ban[1]}">${ban[0]||(b.pc?'':b.lock?'대기 중…':'선택')}</div>${ban[2]}${ph=='slam'&&b.mg?`<i class="bm ${b.pc=='MAGE'?'fR':'fL'}"><span>mod 100</span></i>`:''}${rv?`<i class="burst ${bc}"></i>`:''}</div>${px}${rv?`<i class="flash ${bc}"></i>`:''}
+ ${ex}<div class="mid"><div class="r">ROUND ${b.r} / 5</div><div class="bn ${ban[1]}">${ban[0]||(b.pc?'':b.lock?'대기 중…':'선택')}</div>${ban[2]}${rv&&b.bm?wt(b.bx?'폭발!':'불발'):''}${ph=='slam'&&b.mg?`<i class="bm ${b.pc=='MAGE'?'fR':'fL'}"><span>mod 100</span></i>`:''}${rv?`<i class="burst ${bc}"></i>`:''}</div>${px}${rv?`<i class="flash ${bc}"></i>`:''}
  <div class="pn me"><b>나</b><div class="pips">${pips(b.ps)}</div></div></div>
  <div class="hand">${b.ph.map((c,i)=>`<button class="hc ${b.sel===i?'sel':''}" onclick="pick(${i})">${card(c,b.pu[i]?'used':'')}</button>`).join('')}<button class="btn pri go" ${b.sel==null||b.lock?'disabled':''} onclick="play()">카드 내기</button></div>
  ${b.over?over():''}`}
@@ -320,11 +328,12 @@ function play(){
  const b=B;if(b.sel==null||b.lock)return;b.lock=true;
  if(b.pvp)return pvpPlay(b.sel);
  round(b.sel,ai())}
-function round(pi,ei){
- const b=B;
- b.pc=b.ph[pi];b.ec=b.eh[ei];b.pu[pi]=1;b.sel=null;b.rv=false;b.res=null;b.ph2='in';{const mp=b.pc=='MAGE',me=b.ec=='MAGE';b.mg=mp!=me&&DEF[mp?b.ec:b.pc].t!='rps'}battle();
+function round(pi,ei,rnd){
+ const b=B;rnd=rnd??Math.random();
+ b.pc=b.ph[pi];b.ec=b.eh[ei];b.pu[pi]=1;b.sel=null;b.rv=false;b.res=null;b.ph2='in';b.bx=false;b.bm=(b.pc=='BOMB')!=(b.ec=='BOMB');
+ {const mp=b.pc=='MAGE',me=b.ec=='MAGE';b.mg=mp!=me&&DEF[mp?b.ec:b.pc].t!='rps'}battle();
  tm.push(setTimeout(()=>{if(B!==b)return;b.ph2='slam';battle();if(b.mg)shrink(false)},650));
- tm.push(setTimeout(()=>{if(B!==b)return;b.eu[ei]=1;b.rv=true;b.ph2='hit';b.res=cmp(b.pc,b.ec);b.cw=b.w;if(b.res>0){b.ps+=b.w;b.w=1}else if(b.res<0){b.es+=b.w;b.w=1}else b.w++;try{navigator.vibrate&&navigator.vibrate(b.res<0?[50,30,80]:b.res>0?[40]:10)}catch(e){}battle();if(b.mg)shrink(true)},b.mg?1550:1080));
+ tm.push(setTimeout(()=>{if(B!==b)return;b.eu[ei]=1;b.rv=true;b.ph2='hit';b.res=cmp(b.pc,b.ec,rnd);b.bx=b.bm&&((b.pc=='BOMB'&&b.res>0)||(b.ec=='BOMB'&&b.res<0));b.cw=b.w;if(b.res>0){b.ps+=b.w;b.w=1}else if(b.res<0){b.es+=b.w;b.w=1}else b.w++;try{navigator.vibrate&&navigator.vibrate(b.bx?[30,20,90]:b.res<0?[50,30,80]:b.res>0?[40]:10)}catch(e){}battle();if(b.mg)shrink(true)},b.mg?1550:1080));
  tm.push(setTimeout(()=>{if(B===b)next()},b.mg?3150:2700))}
 function next(){
  const b=B;
@@ -399,12 +408,12 @@ async function pvpPlay(pi){
 async function pvpMsg(t,p){
  const b=B;if(!b||!b.pvp||!p)return;const n=b.net[p.r]=b.net[p.r]||{};
  if(t=='commit')n.oh=p.h;
- else{if(await sha(p.card+':'+p.nonce)!==n.oh||!b.eh.includes(p.card))return toast('상대의 응답이 올바르지 않아요');n.oc=p.card}
+ else{if(await sha(p.card+':'+p.nonce)!==n.oh||!b.eh.includes(p.card))return toast('상대의 응답이 올바르지 않아요');n.oc=p.card;n.on=p.nonce}
  pvpTry(p.r)}
-function pvpTry(r){
+async function pvpTry(r){
  const b=B;if(!b||!b.pvp)return;const n=b.net[r];if(!n||n.done)return;
  if(n.h&&n.oh&&!n.sent){n.sent=1;send('reveal',{r,card:n.card,nonce:n.nonce})}
- if(n.sent&&n.oc){n.done=1;let ei=b.eh.findIndex((c,i)=>c==n.oc&&!b.eu[i]);if(ei<0)ei=b.eh.findIndex((c,i)=>!b.eu[i]);round(n.pi,ei)}}
+ if(n.sent&&n.oc){n.done=1;let ei=b.eh.findIndex((c,i)=>c==n.oc&&!b.eu[i]);if(ei<0)ei=b.eh.findIndex((c,i)=>!b.eu[i]);const h=await sha([n.nonce,n.on].sort().join('|'));round(n.pi,ei,parseInt(h.slice(0,8),16)/4294967296)}}
 function pvpOver(w,b){
  const t={win:['VICTORY','var(--acc)'],lose:['DEFEAT','var(--lose)'],draw:['DRAW','var(--mute)']}[w];
  return `<div class="ov"><div class="pnl"><h1 style="color:${t[1]}">${t[0]}</h1><div class="sc">${b.ps} : ${b.es}</div>${b.dc?'<div class="oh">상대가 나갔어요</div>':''}<div class="acts">${b.dc?'':`<button class="btn pri" ${b.rm?'disabled':''} onclick="rematch()">${b.rm?'상대를 기다리는 중…':'한 판 더'}</button>`}<button class="btn" onclick="leaveRoom();B=null;go('home')">나가기</button></div></div></div>`}
